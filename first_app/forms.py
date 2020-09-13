@@ -3,26 +3,34 @@ from django.core import validators
 from .models import User
 
 
-class FormName(forms.Form):
+class FormName(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+    mail = forms.EmailField()
+
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+
+class NewUserForm(forms.Form):
     name = forms.CharField()
-    password = forms.CharField()
-
-
+    password = forms.CharField(widget=forms.PasswordInput())
+    
     def clean(self):
         all_clean_data = super().clean()
         name = all_clean_data['name']
         password = all_clean_data['password']
 
 
-class NewUserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-    class Meta:
-        model = User
-        fields = '__all__'
-
-
 class FormSearch(forms.Form):
-    URL = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-sm-2','type' : 'text', 'aria-label' : 'Search'}))
+
+    doctor = forms.CharField()
+    paciente = forms.CharField()
+
     def clean(self):
         all_clean_data = super().clean()
-        name = all_clean_data['search']
+        doctor = all_clean_data['doctor']
+        paciente = all_clean_data['paciente']
+

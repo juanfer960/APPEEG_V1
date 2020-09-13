@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 
 
@@ -10,7 +13,9 @@ urlpatterns = [
     path('singout/',views.singout,name='singout'),
     path('search/<user>-<password>/',views.search,name='search'),
     path('home/<user>-<password>/',views.home,name='home'),
-    path('songSerch/<user>-<password>/',views.songSerch,name='songSerch'),
-    path('analysis/<user>-<password>',views.analysis,name='analysis'),
-
+    path('fileSerch/<user>-<password>-<paciente>-<edad>/',views.fileSerch,name='fileSerch'),
+    path('eegSerch/<user>-<password>/',views.eegSerch,name='eegSerch'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
